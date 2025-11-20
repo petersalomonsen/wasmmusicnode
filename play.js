@@ -1,7 +1,7 @@
 import { AudioContext,AudioWorkletNode } from 'node-web-audio-api';
 import { readFile} from 'fs/promises';
 
-const wasm_synth_bytes = await readFile('./noiseandmadness.wasm');
+const wasm_synth_bytes = await readFile(process.argv[process.argv.length-1]);
 
 const context = new AudioContext({ sampleRate: 44100 });
 await context.audioWorklet.addModule('./audioworkletprocessor.js');

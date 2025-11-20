@@ -11,7 +11,14 @@ npm install
 
 Play the wasm-music file [noiseandmadness.wasm](./noiseandmadness.wasm):
 
+```bash
+node play.js noiseandmadness.wasm
 ```
-node play.js
+
+or
+
+```bash
+node play.js themonsterisclose.wasm
 ```
+
 

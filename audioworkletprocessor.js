@@ -1,7 +1,6 @@
 const SAMPLE_FRAMES = 128;
 
 class AssemblyScriptMidiSynthAudioWorkletProcessor extends AudioWorkletProcessor {
-
     constructor() {
         super();
         this.processorActive = true;
@@ -18,41 +17,6 @@ class AssemblyScriptMidiSynthAudioWorkletProcessor extends AudioWorkletProcessor
 
                 this.port.postMessage({ wasmloaded: true });
             }
-
-            if (this.wasmInstance) {
-                if (msg.data.toggleSongPlay !== undefined) {
-                    if (msg.data.toggleSongPlay === false) {
-                        this.wasmInstance.allNotesOff();
-                        this.playSong = false;
-                    } else {
-                        this.playSong = true;
-                    }
-                }
-
-                if (msg.data.seek !== undefined) {
-                    this.wasmInstance.allNotesOff();
-                    this.wasmInstance.seek(msg.data.seek);
-                }
-
-                if (msg.data.currentTime) {
-                    this.port.postMessage({
-                        currentTime: this.wasmInstance.currentTimeMillis.value
-                    });
-                }
-            }
-
-            if (msg.data.midishortmsg) {
-                (await this.wasmInstancePromise).instance.exports.shortmessage(
-                    msg.data.midishortmsg[0],
-                    msg.data.midishortmsg[1],
-                    msg.data.midishortmsg[2]
-                );
-            }
-
-            if (msg.data.terminate) {
-                this.processorActive = false;
-                this.port.close();
-            }
         };
         this.port.start();
     }
@@ -61,11 +25,7 @@ class AssemblyScriptMidiSynthAudioWorkletProcessor extends AudioWorkletProcessor
         const output = outputs[0];
 
         if (this.wasmInstance) {
-            if (this.playSong) {
-                this.wasmInstance.playEventsAndFillSampleBuffer();
-            } else {
-                this.wasmInstance.fillSampleBuffer();
-            }
+            this.wasmInstance.playEventsAndFillSampleBuffer();
 
             output[0].set(new Float32Array(this.wasmInstance.memory.buffer,
                 this.wasmInstance.samplebuffer,
