@@ -49,3 +49,9 @@ It is also possible for you to test it here:
 https://wasmmusic.testnet.page/
 
 If you need NEAR Blockchain testnet tokens, you can get them from here: https://docs.near.org/faucet#faucet
+
+# Demo Videos
+
+If you want to see and learn more, check out this youtube playlist
+
+https://www.youtube.com/playlist?list=PLv5wm4YuO4IxRDu1k8fSBVuUlULA8CRa7
